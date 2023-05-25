@@ -3,7 +3,6 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 import Cabecalho from './Cabecalho';
 import Rodape from './Rodape';
 
-
 const Pagina = (props) => {
   console.log(props)
   return (
