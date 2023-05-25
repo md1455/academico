@@ -9,8 +9,6 @@ const Form = () => {
   const { push } = useRouter()
   const { register, handleSubmit } = useForm();
 
-    const { register, handleSubmit } = useForm()
-
     function salvar (dados){
         console.log(dados);
     }
