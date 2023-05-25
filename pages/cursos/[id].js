@@ -1,18 +1,34 @@
 import Pagina from '@/components/Pagina'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { BsArrowBarLeft, BsSendCheck } from 'react-icons/bs'
 
-const Form = () => {
-  const { push } = useRouter()
-  const { register, handleSubmit } = useForm();
+const id = () => {
+  const { push, query } = useRouter()
+  const { register, handleSubmit, setValue } = useForm();
+
+  useEffect(()=>{
+    if(query.id) { 
+    const cursos = JSON.parse(window.localStorage.getItem('cursos'))
+    const curso = cursos[query.id]
+    for(let campo in curso) {
+        setValue(campo, curso[campo])
+    }
+}
+  },[query.id])
 
   function salvar(dados) {
     const cursos = JSON.parse(window.localStorage.getItem('cursos')) || []
     cursos.unshift(dados)
+    window.localStorage.setItem('cursos', JSON.stringify(cursos))
+    push("/cursos")
+  }
+  function alterar(id,dados){
+    const cursos = JSON.parse(window.localStorage.getItem('cursos')) || []
+    cursos.splice(id, 0, dados)
     window.localStorage.setItem('cursos', JSON.stringify(cursos))
     push("/cursos")
   }
@@ -36,7 +52,9 @@ const Form = () => {
         </Form.Group>
 
         <div className='text-center'>
-        <Button variant="success" className='me-2' onClick={handleSubmit(salvar)}>
+        <Button variant="success" className='me-2' onClick={() =>{
+            alterar(query.id)
+        }}>
           <BsSendCheck className='me-2'/>
           Salvar
         </Button>
@@ -52,4 +70,4 @@ const Form = () => {
   )
 }
 
-export default Form
+export default id
