@@ -13,7 +13,6 @@ const form = () => {
   const { register, handleSubmit, setValue } = useForm()
 
   useEffect(() => {
-
     if(query.id){
     const id = query.id
     const cursos = JSON.parse(window.localStorage.getItem('cursos'))
